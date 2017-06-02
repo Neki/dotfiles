@@ -29,6 +29,7 @@ alias gk="gitk --all"
 alias va=". venv/bin/activate"
 alias n='nvim'
 alias t='todo.sh'
+alias ll='ls -al'
 
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
