@@ -1,0 +1,11 @@
+[user]
+	name = Benoît Faucon
+	email = benoit.faucon@nokia.com
+[push]
+	default = simple
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
