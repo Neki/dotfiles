@@ -62,4 +62,4 @@ pyenv() {
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # additional local config
-[[ -a ~/.zshrc.local ]] && ~/.zshrc.local
+[[ -a ~/.zshrc.local ]] && source ~/.zshrc.local
