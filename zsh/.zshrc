@@ -46,13 +46,16 @@ export FZF_DEFAULT_COMMAND='rg -g \  --files'
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 rbenv() {
+ unfunction rbenv
  eval "$(rbenv init -)"
  rbenv "$@"
 }
 
 # pyenv
-export PATH="$HOME/.pyenv/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv/"
+export PATH="$PYENV_ROOT/bin:$PATH"
 pyenv() {
+unfunction pyenv
  eval "$(pyenv init -)"
  eval "$(pyenv virtualenv-init -)"
  pyenv "$@"
