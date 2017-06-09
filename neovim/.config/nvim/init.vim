@@ -206,19 +206,6 @@ nnoremap <Leader>( :SidewaysLeft<CR>
 nnoremap <Leader>) :SidewaysRight<CR>
 
 
-
-" temp
-let errfor =
-    \ '%E%f:%l: could not compile,%-Z%p^,' .
-    \ '%A%f:%l:%c: %t%n %m,' .
-    \ '%A%f:%l: %t%n %m,' .
-    \ '%-G%.%#'
-let g:neomake_flake8_maker = {
-    \ 'exe': 'flake8',
-    \ 'args': ['.'],
-    \ 'errorformat': errfor
-    \ }
-
 " terminal
 " use jk instead, so programs inside can receive Esc
 if has('nvim')
