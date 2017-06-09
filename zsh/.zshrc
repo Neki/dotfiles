@@ -1,5 +1,6 @@
 source ~/.zplug/init.zsh
 
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "plugins/last-working-dir",   from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "agkozak/agkozak-zsh-theme"
