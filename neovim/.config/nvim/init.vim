@@ -116,6 +116,7 @@ Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
 Plug 'bps/vim-textobj-python', { 'for': 'python' }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'romainl/Apprentice'
+Plug 'rust-lang/rust.vim'
 " Haskell
 " Plug 'bitc/lushtags', { 'for': 'haskell' }
 " Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
