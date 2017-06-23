@@ -1,3 +1,21 @@
+# History configuration
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+setopt share_history
+setopt extended_history
+setopt bang_hist
+setopt inc_append_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_find_no_dups
+setopt hist_ignore_space
+setopt hist_save_no_dups
+setopt hist_reduce_blanks
+setopt hist_verify
+
+
 source ~/.zplug/init.zsh
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
@@ -31,10 +49,6 @@ alias va=". venv/bin/activate"
 alias n='nvim'
 alias t='todo.sh'
 alias ll='ls -al'
-
-SAVEHIST=10000
-HISTFILE=~/.zsh_history
-setopt share_history
 
 bindkey -e
 bindkey '^P' up-history
