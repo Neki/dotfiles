@@ -48,7 +48,7 @@ alias gk="gitk --all"
 alias va=". venv/bin/activate"
 alias n='nvim'
 alias t='todo.sh'
-alias ll='ls -al'
+alias ll='ls -al --color'
 
 bindkey -e
 bindkey '^P' up-history
