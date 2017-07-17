@@ -25,6 +25,13 @@ zplug "agkozak/agkozak-zsh-theme"
 
 zplug load
 
+# display pwd and last command in terminal title
+case $TERM in
+    rxvt-unicode*)
+        preexec () {print -Pn "\e]0;$PWD $1\a"}
+        ;;
+esac
+
 # Apply bash completion
 activate_bash_completion() {
  autoload bashcompinit
