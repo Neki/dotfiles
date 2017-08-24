@@ -84,7 +84,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe', { 'do': './install --racer-completer --tern-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --racer-completer --tern-completer' }
 Plug 'tomtom/tcomment_vim'
 Plug 'xolox/vim-misc'
 Plug 'airblade/vim-gitgutter'
