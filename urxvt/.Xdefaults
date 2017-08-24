@@ -1,6 +1,6 @@
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
-URxvt*saveLines: 10000
+URxvt*saveLines: 100000
 
 ! do not scroll with output
 URxvt*scrollTtyOutput: false
