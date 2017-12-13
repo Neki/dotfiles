@@ -55,6 +55,7 @@ command! -nargs=1 To silent !i3-msg exec "urxvt -e $SHELL -c \"cd $PWD && <args>
 
 " paste last yanked text with <Leader>p
 nnoremap <Leader>p "0p
+nnoremap <Leader>P "0P
 
 " Remove trailing spaces on save, or with the sequence 'tws'
 function! TrimWhiteSpace()
