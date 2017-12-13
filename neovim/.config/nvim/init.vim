@@ -20,6 +20,7 @@ set shiftwidth=4
 " recursive search with :find, gf...
 " I don't do much C, so remove /usr/include from path too
 set path=.,,**
+
 if has('nvim')
   set inccommand=split
 endif
@@ -162,6 +163,7 @@ let g:neomake_warning_sign = {
             \ 'text': '⚠',
             \ 'texthl': 'ErrorSign',
             \ }
+let g:neomake_python_enabled_makers = ['flake8']
 
 " taglist
 map <C-b> :TagbarToggle<CR>
