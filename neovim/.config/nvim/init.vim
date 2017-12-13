@@ -17,6 +17,9 @@ set mouse=a
 set expandtab
 set shiftwidth=4
 
+" recursive search with :find, gf...
+" I don't do much C, so remove /usr/include from path too
+set path=.,,**
 if has('nvim')
   set inccommand=split
 endif
