@@ -102,7 +102,6 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
-Plug 'godlygeek/tabular'
 Plug 'gioele/vim-autoswap'
 Plug 'tpope/vim-surround'
 Plug 'AndrewRadev/sideways.vim'
@@ -122,6 +121,7 @@ Plug 'bps/vim-textobj-python', { 'for': 'python' }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'romainl/Apprentice'
 Plug 'rust-lang/rust.vim'
+Plug 'junegunn/vim-easy-align'
 " Haskell
 " Plug 'bitc/lushtags', { 'for': 'haskell' }
 " Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
@@ -191,14 +191,6 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_python_binary_path = 'python'
 let g:ycm_rust_src_path = '/home/bfaucon/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
-
-" Tabular
-if exists(":Tabularize")
-  nnoremap <Leader>a= :Tabularize /=<CR>
-  vnoremap <Leader>a= :Tabularize /=<CR>
-  nnoremap <Leader>a: :Tabularize /:\zs<CR>
-  vnoremap <Leader>a: :Tabularize /:\zs<CR>
-endif
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<c-h>"
@@ -280,3 +272,10 @@ nmap <C-P> <Plug>yankstack_substitute_newer_paste
 let g:yankstack_yank_keys = ['y', 'd']
 
 nnoremap <C-n> <C-^>
+
+" vim-easy-align
+" ga is mapped to :ascii by default in Vim, which I've never used
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
