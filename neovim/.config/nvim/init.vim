@@ -267,6 +267,8 @@ nnoremap <Space>o :BTags<CR>
 nnoremap <Space>t :Tags<CR>
 let g:fzf_commits_log_options = '--color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 
+nnoremap <Leader>gf :call fzf#vim#files(getcwd(), {"options": "-q" . expand('<cword>') })<CR>
+
 
 " yankstack
 nmap <C-p> <Plug>yankstack_substitute_older_paste
