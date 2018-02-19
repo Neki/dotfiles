@@ -122,6 +122,7 @@ Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'romainl/Apprentice'
 Plug 'rust-lang/rust.vim'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/vim-easy-align'
 " Haskell
 " Plug 'bitc/lushtags', { 'for': 'haskell' }
