@@ -124,6 +124,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-obsession'
 " Haskell
 " Plug 'bitc/lushtags', { 'for': 'haskell' }
 " Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
