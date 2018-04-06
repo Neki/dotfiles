@@ -54,6 +54,7 @@ fi
 alias gk="gitk --all"
 alias va=". venv/bin/activate"
 alias n='nvim'
+alias ns='nvim -S'
 alias t='todo.sh'
 alias ll='ls -al --color'
 
@@ -85,6 +86,8 @@ unfunction pyenv
 
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
+
+[[ -a ~/.config/z.sh ]] && source ~/.config/z.sh
 
 # additional local config
 [[ -a ~/.zshrc.local ]] && source ~/.zshrc.local
