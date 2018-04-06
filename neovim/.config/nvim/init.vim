@@ -125,6 +125,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-obsession'
+Plug 'rhysd/devdocs.vim'
 " Haskell
 " Plug 'bitc/lushtags', { 'for': 'haskell' }
 " Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
@@ -284,3 +285,6 @@ nnoremap <C-n> <C-^>
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" devdocs
+nmap K <Plug>(devdocs-under-cursor)
