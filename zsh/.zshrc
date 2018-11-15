@@ -46,9 +46,11 @@ export PATH="$HOME/.local/bin:$PATH"
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
+  export VISUAL='vim'
   export TERM='rxvt-unicode'
 else
   export EDITOR='vim'
+  export VISUAL='vim'
 fi
 
 alias gk="gitk --all"
