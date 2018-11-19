@@ -17,6 +17,8 @@ set mouse=a
 set expandtab
 set shiftwidth=4
 
+
+
 " recursive search with :find, gf...
 " I don't do much C, so remove /usr/include from path too
 set path=.,,**
@@ -117,6 +119,7 @@ Plug 'mxw/vim-jsx', { 'for': 'jsx' }
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'justinmk/vim-sneak'
 Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
+Plug 'hashivim/vim-terraform'
 Plug 'bps/vim-textobj-python', { 'for': 'python' }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'romainl/Apprentice'
@@ -288,3 +291,10 @@ nmap ga <Plug>(EasyAlign)
 
 " devdocs
 nmap K <Plug>(devdocs-under-cursor)
+
+" Terraform
+let g:terraform_fmt_on_save=1
+let g:terraform_align=1
+
+" Ansible
+nnoremap <Leader>a :let @a = system("ansible-vault encrypt_string --vault-id ~/ansible_vault_password " . expand("<cword>"))<CR>"ap<CR>
