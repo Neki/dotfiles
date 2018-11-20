@@ -50,8 +50,8 @@ let mapleader = ","
 nnoremap , -
 
 " Open tig in a new shell
-command! Gt silent !i3-msg exec "urxvt -e $SHELL -c \"cd $PWD && tig status\"" >/dev/null 2>&1
-command! Gk !gitk --all
+"command! Gt silent !i3-msg exec "urxvt -e $SHELL -c \"cd $PWD && tig status\"" >/dev/null 2>&1
+command! Gt silent !i3-msg exec "gnome-terminal -x $SHELL -c \"cd $PWD && tig status\"" >/dev/null 2>&1
 
 " :To git log %
 command! -nargs=1 To silent !i3-msg exec "urxvt -e $SHELL -c \"cd $PWD && <args> \"" >/dev/null 2>&1
