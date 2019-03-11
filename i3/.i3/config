@@ -185,3 +185,4 @@ for_window [title="CSSH"] floating enable
 
 bindsym $mod+u [class="Firefox"] focus
 bindsym $mod+i workspace back_and_forth
+bindsym $mod+Shift+s exec /home/benoit/.local/bin/i3-display-swap.sh
