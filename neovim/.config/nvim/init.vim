@@ -298,3 +298,6 @@ let g:terraform_align=1
 
 " Ansible
 nnoremap <Leader>a :let @a = system("ansible-vault encrypt_string --vault-id ~/ansible_vault_password " . getline("."))<CR>"ap<CR>
+
+au BufNewFile,BufRead Jenkinsfile set filetype=groovy
+autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
