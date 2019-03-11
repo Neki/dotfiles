@@ -297,4 +297,4 @@ let g:terraform_fmt_on_save=1
 let g:terraform_align=1
 
 " Ansible
-nnoremap <Leader>a :let @a = system("ansible-vault encrypt_string --vault-id ~/ansible_vault_password " . expand("<cword>"))<CR>"ap<CR>
+nnoremap <Leader>a :let @a = system("ansible-vault encrypt_string --vault-id ~/ansible_vault_password " . getline("."))<CR>"ap<CR>
