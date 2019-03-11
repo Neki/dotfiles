@@ -170,7 +170,7 @@ let g:neomake_warning_sign = {
             \ 'text': '⚠',
             \ 'texthl': 'ErrorSign',
             \ }
-let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_python_enabled_makers = ['flake8', 'pylint', 'mypy']
 
 " taglist
 map <C-b> :TagbarToggle<CR>
