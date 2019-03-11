@@ -183,5 +183,5 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightne
 
 for_window [title="CSSH"] floating enable
 
-bindsym $mod+u [class="Google-chrome"] focus
+bindsym $mod+u [class="Firefox"] focus
 bindsym $mod+i workspace back_and_forth
