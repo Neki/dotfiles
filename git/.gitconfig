@@ -11,3 +11,4 @@
 	br = branch
 [core]
 	editor = vim
+	excludesfile = /home/benoit/.gitignore_global
