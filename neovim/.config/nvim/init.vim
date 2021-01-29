@@ -10,14 +10,27 @@ set splitright
 set hidden
 set ttimeoutlen=0
 set shiftround
-set tags=./tags;
+set tags=./.tags;
 set mouse=a
 
 " expand tabs by default
 set expandtab
 set shiftwidth=4
+set tabstop=4
+augroup filetypes
+  autocmd!
+  au BufRead,BufNewFile *.json set filetype=json
+  au BufRead,BufNewFile *.yml.example set filetype=yaml
+augroup END
+augroup whitespace
+  au Filetype go setlocal noexpandtab shiftwidth=4 softtabstop=4 tabstop=4
+augroup END
 
 
+set foldmethod=indent
+set foldlevelstart=40
+
+nnoremap <C-n> <C-^>
 
 " recursive search with :find, gf...
 " I don't do much C, so remove /usr/include from path too
@@ -33,12 +46,6 @@ filetype plugin indent on
 set undofile
 set formatoptions="jcroql"
 
-augroup filetypes
-  autocmd!
-  au BufRead,BufNewFile *.json set filetype=json
-  au BufRead,BufNewFile *.yml.example set filetype=yaml
-augroup END
-
 set backspace=indent,eol,start
 set textwidth=110
 
@@ -50,11 +57,7 @@ let mapleader = ","
 nnoremap , -
 
 " Open tig in a new shell
-"command! Gt silent !i3-msg exec "urxvt -e $SHELL -c \"cd $PWD && tig status\"" >/dev/null 2>&1
 command! Gt silent !i3-msg exec "gnome-terminal -x $SHELL -c \"cd $PWD && tig status\"" >/dev/null 2>&1
-
-" :To git log %
-command! -nargs=1 To silent !i3-msg exec "urxvt -e $SHELL -c \"cd $PWD && <args> \"" >/dev/null 2>&1
 
 " paste last yanked text with <Leader>p
 nnoremap <Leader>p "0p
@@ -82,22 +85,24 @@ omap ) ]
 xmap ( [
 xmap ) ]
 
+" assume pynvim is installed globally
+let g:python3_host_prog = '/usr/bin/python3'
+
+
 " Plugins
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" TODO try to make that usable, or remove it
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --racer-completer --tern-completer' }
-Plug 'tomtom/tcomment_vim'
-Plug 'xolox/vim-misc'
-Plug 'airblade/vim-gitgutter'
-Plug 'benekastah/neomake'
-Plug 'majutsushi/tagbar'
 Plug 'honza/vim-snippets'
+Plug 'tomtom/tcomment_vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'majutsushi/tagbar'
 Plug 'Raimondi/delimitMate'
 Plug 'mbbill/undotree'
 Plug 'dyng/ctrlsf.vim'
@@ -110,36 +115,44 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'glts/vim-textobj-comment'
 Plug 'sgur/vim-textobj-parameter'
-Plug 'tommcdo/vim-exchange'
+Plug 'lucapette/vim-textobj-underscore'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'henrik/vim-indexed-search'
 Plug 'gcmt/taboo.vim'
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx', { 'for': 'jsx' }
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'justinmk/vim-sneak'
-Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
-Plug 'hashivim/vim-terraform'
-Plug 'bps/vim-textobj-python', { 'for': 'python' }
-Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'romainl/Apprentice'
-Plug 'rust-lang/rust.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/vim-easy-align'
-Plug 'tpope/vim-obsession'
 Plug 'rhysd/devdocs.vim'
-" Haskell
-" Plug 'bitc/lushtags', { 'for': 'haskell' }
-" Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
-" Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
-" To make the Haskell plugins work:
-" Install the Haskell platform: sudo apt-get install haskell-platform
-" Update cabal-install: cabal install cabal-install
-" Update pkg list: cabal update
-" Install required packages: cabal install ghc-mod hdevtools lushtags
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'antoinemadec/coc-fzf'
+" language specific plugins
+" Python
+Plug 'bps/vim-textobj-python', { 'for': 'python' }
+Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
+Plug 'psf/black'
+" Frontend (JS & co)
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx', { 'for': 'jsx' }
+" Infra-as-code
+Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
+Plug 'hashivim/vim-terraform'
+" Rust
+Plug 'rust-lang/rust.vim'
+" Various
+Plug 'Glench/Vim-Jinja2-Syntax'
+" JS
+Plug 'storyn26383/vim-vue'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'mgedmin/python-imports.vim', { 'for': 'python' }
 
 call plug#end()
+
+" yankstack
+nmap <C-p> <Plug>yankstack_substitute_older_paste
+nmap <C-P> <Plug>yankstack_substitute_newer_paste
+let g:yankstack_yank_keys = ['y', 'd', 'Y', 'D']
 
 " Color theme (using vim-plug for download)
 colorscheme apprentice
@@ -159,20 +172,7 @@ let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.branch = '↯'
 let g:airline_symbols.paste = 'ρ'
 
-" Neomake
-autocmd! BufWritePost * Neomake
-"highlight ErrorSign ctermbg=black ctermfg=red
-let g:neomake_error_sign = {
-            \ 'text': '✗',
-            \ 'texthl': 'ErrorSign',
-            \ }
-let g:neomake_warning_sign = {
-            \ 'text': '⚠',
-            \ 'texthl': 'ErrorSign',
-            \ }
-let g:neomake_python_enabled_makers = ['flake8', 'pylint', 'mypy']
-
-" taglist
+" tagbar
 map <C-b> :TagbarToggle<CR>
 let g:tagbar_left = 1
 let g:tagbar_autofocus = 1
@@ -180,9 +180,6 @@ let g:tagbar_autofocus = 1
 " Undotree
 nnoremap U :UndotreeToggle<CR>
 let g:undotree_SetFocusWhenToggle = 1
-
-" CtrlSF
-nnoremap <C-S-F> :CtrlSF<Space>
 
 " neco-ghc
 let g:ycm_semantic_triggers = {'haskell' : ['.']}
@@ -267,20 +264,17 @@ nnoremap <Space>b :Buffers<CR>
 nnoremap <Space>l :BLines<CR>
 nnoremap <Space>L :Lines<CR>
 nnoremap <Space>h :History<CR>
-" outline
+" mnemonic: outline
 nnoremap <Space>o :BTags<CR>
 nnoremap <Space>t :Tags<CR>
+nnoremap <Space>S :Snippets<CR>
 let g:fzf_commits_log_options = '--color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
-
 nnoremap <Leader>gf :call fzf#vim#files(getcwd(), {"options": "-q" . expand('<cword>') })<CR>
 
-
-" yankstack
-nmap <C-p> <Plug>yankstack_substitute_older_paste
-nmap <C-P> <Plug>yankstack_substitute_newer_paste
-let g:yankstack_yank_keys = ['y', 'd']
-
-nnoremap <C-n> <C-^>
+" nnoremap :SnippetsEdit :CocCommand snippets.editSnippets
+xmap <leader>x  <Plug>(coc-convert-snippet)
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " vim-easy-align
 " ga is mapped to :ascii by default in Vim, which I've never used
@@ -290,14 +284,151 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " devdocs
-nmap K <Plug>(devdocs-under-cursor)
+" (note that K is already overriden by the coc plugin)
+nmap <leader>k <Plug>(devdocs-under-cursor)
 
 " Terraform
+au BufNewFile,BufRead *.hcl set filetype=terraform
 let g:terraform_fmt_on_save=1
 let g:terraform_align=1
+au BufWritePre *.hcl TerraformFmt
 
 " Ansible
 nnoremap <Leader>a :let @a = system("ansible-vault encrypt_string --vault-id ~/ansible_vault_password " . getline("."))<CR>"ap<CR>
 
-au BufNewFile,BufRead Jenkinsfile set filetype=groovy
-autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
+" CtrlSF
+let g:ctrlsf_position = 'right'
+
+" Vue
+let g:vue_disable_pre_processors=1
+
+" Prettier
+" when running at every change you may want to disable quickfix
+let g:prettier#quickfix_enabled = 0
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+
+" Gutentags
+let g:gutentags_cache_dir = '~/.local/share/nvim/tags'
+"let g:gutentags_ctags_tagfile = ".tags"
+
+" Python imports
+nnoremap <leader>i :ImportName<CR>:%!isort -<CR>
+nnoremap <leader>I :%!isort -<CR>
+
+" Track current directory, system-wide
+" Used by .zshrc (or similar) when a new shell is opened
+autocmd FocusGained * call writefile([getcwd()], "/home/benoit/.cwd")
+autocmd DirChanged * call writefile([getcwd()], "/home/benoit/.cwd")
+
+
+" ======================= COC ============================
+" Avoid triggering full rebuilds for some language servers
+" see https://github.com/neoclide/coc.nvim/issues/649
+" set backupdir=~/.local/share/nvim/backup
+set nobackup
+set nowritebackup
+" Give more space for displaying messages. Less useful now that we have tooltips.
+" set cmdheight=2
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gI <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>d  :<C-u>CocFzfList diagnostics<cr>
+" Manage extensions
+" nnoremap <silent> <space>x  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocFzfList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>O  :<C-u>CocFzfList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocFzfList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Remap <C-d> and <C-b> for scroll float windows/popups.
+nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-d>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+vnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-d>"
+vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+
+" Remap for rename current word
+nnoremap <leader>rn <Plug>(coc-rename)
+" Run action
+nnoremap <leader>ca :<C-u>CocAction<CR>
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+" xmap if <Plug>(coc-funcobj-i)
+" omap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap af <Plug>(coc-funcobj-a)
+" xmap ic <Plug>(coc-classobj-i)
+" omap ic <Plug>(coc-classobj-i)
+" xmap ac <Plug>(coc-classobj-a)
+" omap ac <Plug>(coc-classobj-a)
+
+" go + coc (format on save using golsp)
+au BufWritePre *.go :Format
+
+" ======================= COC (end) ============================
+
+" CtrlSF
+ nnoremap <C-S-F> :<C-u>CtrlSF<space>
