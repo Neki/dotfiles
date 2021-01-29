@@ -1,0 +1,8 @@
+{
+    "python.linting.mypyEnabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.jediEnabled": false,
+    "rust.clippy_preference": "on",
+    "coc.preferences.formatOnSaveFiletypes": ["rust"],
+    "go.goplsUseDaemon": false
+}
