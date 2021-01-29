@@ -56,33 +56,31 @@ fi
 alias gk="gitk --all"
 alias va=". venv/bin/activate"
 alias n='nvim'
-alias ns='nvim -S'
-alias t='todo.sh'
 alias ll='ls -al --color'
 
 bindkey -e
 bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey "^R" history-incremental-pattern-search-backward
+bindkey '^f' forward-word
+bindkey '^b' backward-word
+bindkey ' ' magic-space
+# Enable Ctrl-x-e to edit command line
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^xe' edit-command-line
+bindkey '^x^e' edit-command-line
 
 export FZF_DEFAULT_COMMAND='rg -g \  --files'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-rbenv() {
- unfunction rbenv
- eval "$(rbenv init -)"
- rbenv "$@"
-}
-
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv/"
 export PATH="$PYENV_ROOT/bin:$PATH"
+# lazy loading of pyenv (load on first invocation)
 pyenv() {
-unfunction pyenv
+ unfunction pyenv
  eval "$(pyenv init -)"
- eval "$(pyenv virtualenv-init -)"
  pyenv "$@"
 }
 
@@ -91,5 +89,31 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 [[ -a ~/.config/z.sh ]] && source ~/.config/z.sh
 
-# additional local config
+
+## Various tools ##
+
+# rg
+export RIPGREP_CONFIG_PATH="/home/benoit/.ripgreprc"
+# AWS
+source ~/.local/bin/aws_zsh_completer.sh
+# github cli
+eval "$(gh completion -s zsh)"
+# Kubernetes
+#alias k=kubectl
+#function change-ns() {
+#    namespace=$1
+#    if [ -z $namespace ]; then
+#        echo "Please provide the namespace name: 'change-ns mywebapp'"
+#        return 1
+#    fi
+#    kubectl config set-context $(kubectl config current-context) --namespace $namespace
+#}
+#alias kn=change-ns
+#export KUBECONFIG=/home/benoit/.kube/config
+#alias kstaging="kubectl config use-context staging"
+#alias kprod="kubectl config use-context production"
+# source <(kubectl completion zsh)
+
+
+# additional local config, not in version control
 [[ -a ~/.zshrc.local ]] && source ~/.zshrc.local
