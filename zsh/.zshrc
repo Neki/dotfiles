@@ -14,7 +14,7 @@ setopt hist_ignore_space
 setopt hist_save_no_dups
 setopt hist_reduce_blanks
 setopt hist_verify
-
+setopt interactivecomments
 
 source ~/.zplug/init.zsh
 
@@ -36,7 +36,7 @@ esac
 activate_bash_completion() {
  autoload bashcompinit
  bashcompinit
- source ~/.bash_completion
+#  source ~/.bash_completion
 }
 
 # User configuration
@@ -71,7 +71,11 @@ zle -N edit-command-line
 bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
 
-export FZF_DEFAULT_COMMAND='rg -g \  --files'
+# export FZF_DEFAULT_COMMAND='rg -g \  --files'
+export FZF_DEFAULT_COMMAND='fd --type file --color=always --hidden'
+export FZF_DEFAULT_OPTS="--ansi"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type directory --color=always --hidden"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # pyenv
@@ -95,9 +99,15 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # rg
 export RIPGREP_CONFIG_PATH="/home/benoit/.ripgreprc"
 # AWS
-source ~/.local/bin/aws_zsh_completer.sh
+# source ~/.local/bin/aws_zsh_completer.sh
+aws() {
+    unfunction "$0"
+    activate_bash_completion
+    complete -C '/usr/local/bin/aws_completer' aws
+    $0 "$@"
+}
 # github cli
-eval "$(gh completion -s zsh)"
+# eval "$(gh completion -s zsh)"
 # Kubernetes
 #alias k=kubectl
 #function change-ns() {
@@ -115,5 +125,36 @@ eval "$(gh completion -s zsh)"
 # source <(kubectl completion zsh)
 
 
+precmd() {
+    echo -en "\033]0;$(dirs)\a"
+}
+
+. $HOME/projects/z.sh
+
 # additional local config, not in version control
 [[ -a ~/.zshrc.local ]] && source ~/.zshrc.local
+
+terraform() {
+    unfunction "$0"
+    activate_bash_completion
+    complete -o nospace -C /home/benoit/dotfiles/i3/.local/bin/terraform terraform
+    $0 "$@"
+}
+
+export PATH="$HOME/.poetry/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/benoit/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/benoit/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/benoit/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/benoit/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

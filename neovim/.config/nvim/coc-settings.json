@@ -1,8 +1,24 @@
 {
+    "python.linting.enabled": true,
     "python.linting.mypyEnabled": true,
     "python.linting.pylintEnabled": true,
     "python.jediEnabled": false,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.formatting.provider": "black",
     "rust.clippy_preference": "on",
     "coc.preferences.formatOnSaveFiletypes": ["rust"],
-    "go.goplsUseDaemon": false
+    "go.goplsUseDaemon": false,
+    "diagnostic.errorSign":"✘",
+	"languageserver": {
+		"terraform": {
+			"command": "terraform-ls",
+			"args": ["serve"],
+			"filetypes": [
+				"terraform",
+				"tf"
+			],
+			"initializationOptions": {},
+			"settings": {}
+		}
+	}
 }

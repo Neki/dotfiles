@@ -10,8 +10,9 @@ set splitright
 set hidden
 set ttimeoutlen=0
 set shiftround
-set tags=./.tags;
+" set tags=./.tags;
 set mouse=a
+set title
 
 " expand tabs by default
 set expandtab
@@ -22,8 +23,9 @@ augroup filetypes
   au BufRead,BufNewFile *.json set filetype=json
   au BufRead,BufNewFile *.yml.example set filetype=yaml
 augroup END
-augroup whitespace
+augroup indentation
   au Filetype go setlocal noexpandtab shiftwidth=4 softtabstop=4 tabstop=4
+  au Filetype yaml setlocal noexpandtab shiftwidth=2 softtabstop=2 tabstop=2
 augroup END
 
 
@@ -57,7 +59,8 @@ let mapleader = ","
 nnoremap , -
 
 " Open tig in a new shell
-command! Gt silent !i3-msg exec "gnome-terminal -x $SHELL -c \"cd $PWD && tig status\"" >/dev/null 2>&1
+" command! Gt silent !i3-msg exec "gnome-terminal -x $SHELL -c \"cd $PWD && tig status\"" >/dev/null 2>&1
+command! Gt silent !i3-msg exec "alacritty --working-directory $PWD -e /usr/bin/tig status"
 
 " paste last yanked text with <Leader>p
 nnoremap <Leader>p "0p
@@ -111,7 +114,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'gioele/vim-autoswap'
 Plug 'tpope/vim-surround'
-Plug 'AndrewRadev/sideways.vim'
+Plug 'AndrewRadev/sideways.vim', {'branch': 'main'}
 Plug 'kana/vim-textobj-user'
 Plug 'glts/vim-textobj-comment'
 Plug 'sgur/vim-textobj-parameter'
@@ -120,8 +123,10 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'gcmt/taboo.vim'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'justinmk/vim-sneak'
-Plug 'romainl/Apprentice'
-Plug 'AndrewRadev/splitjoin.vim'
+
+Plug 'drewtempelmeyer/palenight.vim'
+
+Plug 'AndrewRadev/splitjoin.vim', {'branch': 'main'}
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/vim-easy-align'
 Plug 'rhysd/devdocs.vim'
@@ -143,8 +148,8 @@ Plug 'rust-lang/rust.vim'
 " Various
 Plug 'Glench/Vim-Jinja2-Syntax'
 " JS
-Plug 'storyn26383/vim-vue'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+" Plug 'storyn26383/vim-vue'
+" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'mgedmin/python-imports.vim', { 'for': 'python' }
 
 call plug#end()
@@ -155,9 +160,10 @@ nmap <C-P> <Plug>yankstack_substitute_newer_paste
 let g:yankstack_yank_keys = ['y', 'd', 'Y', 'D']
 
 " Color theme (using vim-plug for download)
-colorscheme apprentice
-hi clear VertSplit
-:set fillchars+=vert:│
+set background=dark
+colorscheme palenight
+" hi clear VertSplit
+" :set fillchars+=vert:│
 
 " vim-airline
 set laststatus=2
@@ -173,28 +179,13 @@ let g:airline_symbols.branch = '↯'
 let g:airline_symbols.paste = 'ρ'
 
 " tagbar
-map <C-b> :TagbarToggle<CR>
+map <C-T> :TagbarToggle<CR>
 let g:tagbar_left = 1
 let g:tagbar_autofocus = 1
 
 " Undotree
 nnoremap U :UndotreeToggle<CR>
 let g:undotree_SetFocusWhenToggle = 1
-
-" neco-ghc
-let g:ycm_semantic_triggers = {'haskell' : ['.']}
-
-" ghcmod-vim
-au BufRead,BufNewFile *.hs nnoremap <Leader>Ht :GhcModType<CR>
-au BufRead,BufNewFile *.hs nnoremap <Leader>Hc :GhcModTypeClear<CR>
-
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_register_as_syntastic_checker = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_python_binary_path = 'python'
-let g:ycm_rust_src_path = '/home/bfaucon/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<c-h>"
@@ -293,20 +284,14 @@ let g:terraform_fmt_on_save=1
 let g:terraform_align=1
 au BufWritePre *.hcl TerraformFmt
 
-" Ansible
-nnoremap <Leader>a :let @a = system("ansible-vault encrypt_string --vault-id ~/ansible_vault_password " . getline("."))<CR>"ap<CR>
-
 " CtrlSF
 let g:ctrlsf_position = 'right'
 
-" Vue
-let g:vue_disable_pre_processors=1
-
 " Prettier
 " when running at every change you may want to disable quickfix
-let g:prettier#quickfix_enabled = 0
-let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+" let g:prettier#quickfix_enabled = 0
+" let g:prettier#autoformat = 0
+" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
 " Gutentags
 let g:gutentags_cache_dir = '~/.local/share/nvim/tags'
@@ -387,7 +372,7 @@ nnoremap <silent> <space>c  :<C-u>CocFzfList commands<cr>
 " Find symbol of current document
 nnoremap <silent> <space>O  :<C-u>CocFzfList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocFzfList -I symbols<cr>
+nnoremap <silent> <space>s  :<C-u>CocFzfList symbols<cr>
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
@@ -405,8 +390,8 @@ inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float
 vnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-d>"
 vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
-" Remap for rename current word
-nnoremap <leader>rn <Plug>(coc-rename)
+" Remap for rename current word (note: for some weird reason, nnoremap doesn't work)
+nmap <leader>rn <Plug>(coc-rename)
 " Run action
 nnoremap <leader>ca :<C-u>CocAction<CR>
 
@@ -432,3 +417,12 @@ au BufWritePre *.go :Format
 
 " CtrlSF
  nnoremap <C-S-F> :<C-u>CtrlSF<space>
+
+let g:airline_powerline_fonts = 1
+hi CocWarningSign ctermfg=Yellow
+
+" Black
+let g:black_linelength = 110
+
+" # requires 0.5.0
+" au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
