@@ -12,3 +12,18 @@
 [core]
 	editor = vim
 	excludesfile = /home/benoit/.gitignore_global
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+
+[delta]
+    plus-style = "syntax #012800"
+    minus-style = "syntax #340001"
+    syntax-theme = TwoDark
+    navigate = true
+    # side-by-side = true
+
+[interactive]
+    diffFilter = delta --color-only

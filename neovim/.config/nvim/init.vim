@@ -123,6 +123,7 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'gcmt/taboo.vim'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'justinmk/vim-sneak'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 Plug 'drewtempelmeyer/palenight.vim'
 
@@ -140,6 +141,8 @@ Plug 'psf/black'
 " Frontend (JS & co)
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': 'jsx' }
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescriptreact'}
 " Infra-as-code
 Plug 'chase/vim-ansible-yaml', { 'for': 'ansible' }
 Plug 'hashivim/vim-terraform'
@@ -416,7 +419,7 @@ au BufWritePre *.go :Format
 " ======================= COC (end) ============================
 
 " CtrlSF
- nnoremap <C-S-F> :<C-u>CtrlSF<space>
+ nnoremap <C-F> :<C-u>CtrlSF<space>
 
 let g:airline_powerline_fonts = 1
 hi CocWarningSign ctermfg=Yellow
