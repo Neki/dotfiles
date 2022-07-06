@@ -160,3 +160,5 @@ unset __conda_setup
 
 # set keyboard repeat rate
 xset r rate 200 40
+
+export BAT_THEME="TwoDark"
