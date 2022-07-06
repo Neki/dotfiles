@@ -158,3 +158,5 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# set keyboard repeat rate
+xset r rate 200 40
